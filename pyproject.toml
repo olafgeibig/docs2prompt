@@ -4,7 +4,10 @@ version = "0.1.0"
 description = ""
 authors = ["Olaf Geibig <GEO5BE4@bosch.com>"]
 readme = "README.md"
-packages = [{include = "docs2prompt", from = "src"}]
+packages = [{include = "docs2prompt"}]
+
+[tool.poetry.scripts]
+docs2prompt = "docs2prompt.main:main"
 
 [tool.poetry.dependencies]
 python = "^3.12"

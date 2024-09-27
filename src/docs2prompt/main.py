@@ -1,22 +1,23 @@
-import json
 import argparse
+import json
 from pathlib import Path
 from pydantic import ValidationError
-from your_module import PromptProject  # Assuming this is your Pydantic model
+from .types import PromptProject
 
-def create_project():
+def create_project(project_name):
+    output_file = f"{project_name}.json"
     # Create an empty project based on the Pydantic model
     project = PromptProject(
-        name="",
-        max_tokens=0,
-        purpose="",
-        instructions="",
+        name=project_name,
+        max_tokens=1000,
+        purpose="Describe the purpose of your project here.",
+        instructions="List your instructions here.",
         documents=[]
     )
     # Serialize to JSON
-    with open("prompt_project.json", "w") as f:
+    with open(output_file, "w") as f:
         json.dump(project.dict(), f, indent=4)
-    print("Empty prompt project created: prompt_project.json")
+    print(f"New prompt project created: {output_file}")
 
 def run_project():
     try:
@@ -47,6 +48,7 @@ def main():
 
     # Create subcommand
     parser_create = subparsers.add_parser('create', help='Create a new prompt project')
+    parser_create.add_argument('project_name', help='Name of the project')
     parser_create.set_defaults(func=create_project)
 
     # Run subcommand
@@ -55,7 +57,10 @@ def main():
 
     # Parse arguments
     args = parser.parse_args()
-    args.func()
+    if args.command == 'create':
+        args.func(args.project_name)
+    else:
+        args.func()
 
 if __name__ == "__main__":
     main()
