@@ -2,7 +2,7 @@ import json
 import argparse
 from pathlib import Path
 from pydantic import ValidationError
-from .types import PromptProject
+from your_module import PromptProject  # Assuming this is your Pydantic model
 
 def create_project():
     # Create an empty project based on the Pydantic model

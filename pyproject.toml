@@ -4,12 +4,19 @@ version = "0.1.0"
 description = ""
 authors = ["Olaf Geibig <GEO5BE4@bosch.com>"]
 readme = "README.md"
+packages = [{include = "docs2prompt", from = "src"}]
 
 [tool.poetry.dependencies]
 python = "^3.12"
 pydantic = "^2.9.2"
 
+[tool.poetry.group.dev.dependencies]
+pytest = "^7.3.1"
 
 [build-system]
 requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+pythonpath = ["src"]
