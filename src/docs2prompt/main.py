@@ -35,9 +35,23 @@ def run_project():
         print(f"Error: {str(e)}")
 
 def generate_prompt(project: PromptProject):
-    # Here you'd implement your document conversion, token optimization, and prompt generation
     print(f"Running project: {project.name}")
-    # Placeholder output for now
+
+    # Process each document in the project
+    for doc_path_str in project.documents:
+        doc_path = Path(doc_path_str)
+        if doc_path.exists():
+            markdown_path = convert_to_markdown(doc_path)
+            if markdown_path:
+                # Read the optimized Markdown content
+                optimized_content = markdown_path.read_text()
+                # Here, you can accumulate the content for the prompt
+                # For example, append to a list or write to a combined file
+        else:
+            print(f"Document not found: {doc_path}")
+
+    # After processing all documents, generate the prompt
+    # Placeholder for prompt generation logic
     with open("generated_prompt.txt", "w") as f:
         f.write(f"Generated prompt for project: {project.name}")
     print("Prompt generated: generated_prompt.txt")
@@ -64,3 +78,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+from .document_processor import convert_to_markdown
