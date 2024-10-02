@@ -12,6 +12,8 @@ docs2prompt = "docs2prompt.main:main"
 [tool.poetry.dependencies]
 python = "^3.12"
 pydantic = "^2.9.2"
+pandoc = "^2.4"
+click = "^8.1.7"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^7.3.1"
