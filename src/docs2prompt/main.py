@@ -3,13 +3,14 @@ import json
 from pathlib import Path
 from pydantic import ValidationError
 from .types import PromptProject
+from .document_processor import convert_to_markdown
 
 def create_project(project_name):
     output_file = f"{project_name}.json"
     # Create an empty project based on the Pydantic model
     project = PromptProject(
         name=project_name,
-        max_tokens=1000,
+        max_tokens=128000,
         purpose="Describe the purpose of your project here.",
         instructions="List your instructions here.",
         documents=[]
@@ -78,4 +79,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-from .document_processor import convert_to_markdown
