@@ -1,0 +1,50 @@
+{
+	"name": "python-poetry-aider",
+	"build": {
+		"dockerfile": "Dockerfile"
+	},
+
+	// 👇 Features to add to the Dev Container. More info: https://containers.dev/implementors/features.
+	// "features": {},
+
+	// 👇 Use 'forwardPorts' to make a list of ports inside the container available locally.
+	// "forwardPorts": [],
+
+	// 👇 Use 'postCreateCommand' to run commands after the container is created.
+	// "postCreateCommand": "",
+
+	// 👇 Configure tool-specific properties.
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "ms-python.python",
+                "njpwerner.autodocstring",
+                "sourcegraph.cody-ai",
+                "sourcegraph.sourcegraph",
+                "aoudrizwan.claude-dev",
+                "ms-python.debugpy",
+                "ms-python.vscode-pylance",
+                "MattFlower.aider",
+                "VisualStudioExptTeam.intellicode-api-usage-examples",
+                "yzhang.markdown-all-in-one",
+                "jebbs.plantuml",
+                "alefragnani.project-manager",
+                "choppedcode.tasks-and-contexts",
+                "donjayamanne.python-environment-manager"
+            ]
+        }
+    },
+    "features": {
+        "ghcr.io/devcontainers/features/common-utils:2": {
+            "installZsh": true,
+            "installOhMyZsh": true,
+            "installOhMyZshConfig": true,
+            "upgradePackages": true,
+            "username": "vscode",
+            "userUid": "1000",
+            "userGid": "1000"
+        }
+    },
+    "remoteUser": "vscode",
+    "postCreateCommand": "if [ ! -f README.md ]; then echo \"# $(basename $PWD)\n\nThis is the README file for the $(basename $PWD) project.\" > README.md; fi"
+}
