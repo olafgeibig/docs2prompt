@@ -1,17 +1,24 @@
 from prompt_toolkit import prompt
 from litellm import completion
 from dotenv import load_dotenv
+from phoenix.otel import register
+from openinference.instrumentation.openai import OpenAIInstrumentor
 
 # Load environment variables from .env file
 load_dotenv()
+tracer_provider = register(
+    project_name="docs2prompt",
+    endpoint="http://localhost:6006/v1/traces"
+)
+OpenAIInstrumentor().instrument(tracer_provider=tracer_provider)
 
-def ai_response(prompt):
+def ai_response(prompt, system_message):
     try:
         response = completion(
             model="gemini/gemini-1.5-flash",
             messages=[
-                {"role": "system", "content": "You are an AI assistant helping to refine input for an AI prompt generator. Expand on the user's input to create a more detailed input. Don't use markdown and variables"},
-                {"role": "user", "content": f"{prompt}"}
+                {"role": "system", "content": system_message},
+                {"role": "user", "content": prompt}
             ],
             max_tokens=150
         )
@@ -20,32 +27,54 @@ def ai_response(prompt):
         print(f"Error in AI response: {e}")
         return f"Failed to get AI response. Using original input: '{prompt}'"
 
-def role_chat():
-    print("Let's refine your role definition.")
+def interactive_chat(chat_type):
+    system_messages = {
+        "role": "You are an AI assistant helping to refine role descriptions for an AI prompt generator. Expand on the user's input to create a more detailed and specific role description.",
+        "purpose": "You are an AI assistant helping to refine project purposes for an AI prompt generator. Expand on the user's input to create a more detailed and specific project purpose.",
+        "instructions": "You are an AI assistant helping to refine instructions for an AI prompt generator. Expand on the user's input to create more detailed and specific instructions."
+    }
 
-    # Example of interactive chat for defining AI role
-    user_input = prompt("Provide a basic role description (e.g., 'python coder'): ")
-    ai_prompt = f"Expand and improve this role description: {user_input}"
+    print(f"Let's refine your {chat_type} definition.")
+
+    user_input = prompt(f"Provide a basic {chat_type} description: ")
+    ai_prompt = f"Expand and improve this {chat_type} description: {user_input}"
+
     while True:
-        response = ai_response(ai_prompt)
+        response = ai_response(ai_prompt, system_messages[chat_type])
         print(f"\nAI Response: {response}")
 
-        # Ask for approval or comments for further refinement
         user_feedback = prompt("\nHow to proceed? approve(a), reject(r) or comment(c): ")
 
         if user_feedback.lower() == "a":
-            print("\nRole description approved.")
-            break
+            print(f"\n{chat_type.capitalize()} description approved.")
+            return response
         elif user_feedback.lower() == "r":
-            user_input = prompt("\nProvide a new basic role description (e.g., 'python coder'): ")
-            ai_prompt = f"Expand and improve this role description: {user_input}"
+            user_input = prompt(f"\nProvide a new basic {chat_type} description: ")
+            ai_prompt = f"Expand and improve this {chat_type} description: {user_input}"
         elif user_feedback.lower() == "c":
             comment = prompt("\nProvide your comments for improvement: ")
-            ai_prompt = f"The user has change requests. The original request was {ai_prompt}\n\n your proposal was: {response}\n\nUser comments: {comment}"
+            ai_prompt = f"The user has change requests. The original request was: {ai_prompt}\n\nYour proposal was: {response}\n\nUser comments: {comment}"
         else:
-            break
+            print("Invalid input. Please try again.")
 
-    return response
+def role_chat():
+    return interactive_chat("role")
+
+def purpose_chat():
+    return interactive_chat("purpose")
+
+def instructions_chat():
+    return interactive_chat("instructions")
 
 if __name__ == "__main__":
-    role_chat()
+    print("Role Chat:")
+    role_result = role_chat()
+    print("\nPurpose Chat:")
+    purpose_result = purpose_chat()
+    print("\nInstructions Chat:")
+    instructions_result = instructions_chat()
+
+    print("\nFinal Results:")
+    print(f"Role: {role_result}")
+    print(f"Purpose: {purpose_result}")
+    print(f"Instructions: {instructions_result}")
