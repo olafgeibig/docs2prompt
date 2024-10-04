@@ -1,4 +1,5 @@
 import click
+from docs2prompt.project_manager import create_project
 
 @click.group()
 def cli():
@@ -14,16 +15,12 @@ def run(project_name):
     # Add logic to run the prompt project
 
 @click.command()
-@click.option('--directory', default='./docs', help='Directory to save the prompt project files')
-@click.option('--max_tokens', default=128000, help='Maximum number of tokens allowed for the prompt')
+@click.option('--max_tokens', default=100000, help='Maximum number of tokens allowed for the prompt')
 @click.option('--name', prompt='Project name', help='Name of the prompt project')
-def create(name, max_tokens, directory):
+def create(name, max_tokens):
     """Create a new prompt project with default values."""
-    click.echo(f'Create command called with name: {name}, max_tokens: {max_tokens}, directory: {directory}')
-    click.echo(f'Creating a new prompt project: {name}')
-    click.echo(f'Max tokens: {max_tokens}')
-    click.echo(f'Directory: {directory}')
-    # Add logic to create the project file with default values
+    click.echo(f'Create command called with name: {name}, max_tokens: {max_tokens}')
+    create_project(name, max_tokens)
 
 # Add all commands to the main CLI group
 click.echo('Adding commands to CLI group')
