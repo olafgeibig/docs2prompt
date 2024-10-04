@@ -1,6 +1,6 @@
 # model: deepseek/deepseek-chat
-# model: claude-3-5-sonnet-20240620
-model: openrouter/openai/o1-preview
+model: claude-3-5-sonnet-20240620
+# model: openrouter/openai/o1-preview
 
 env-file: .env.aider
 cache-prompts: true
@@ -12,8 +12,8 @@ auto-test: true
 no-stream: true
 
 architect: true
-editor-model: deepseek/deepseek-chat
-# editor-model: claude-3-5-sonnet-20240620
+# editor-model: deepseek/deepseek-chat
+editor-model: claude-3-5-sonnet-20240620
 # editor-edit-format: diff
 
 read: [specs/CONVENTIONS.md, specs/project.md, specs/mvp.md]

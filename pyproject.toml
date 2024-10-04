@@ -7,7 +7,7 @@ readme = "README.md"
 packages = [{include = "docs2prompt", from="src"}]
 
 [tool.poetry.scripts]
-docs2prompt = "docs2prompt.main:main"
+docs2prompt = "docs2prompt.main:cli"
 
 [tool.poetry.dependencies]
 python = "^3.12"
