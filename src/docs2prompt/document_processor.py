@@ -3,7 +3,7 @@ import subprocess
 import logging
 from typing import Optional
 
-from .types import PromptProject  # Adjust the import based on actual usage
+from .custom_types import PromptProject  # Adjust the import based on actual usage
 from .token_optimizer import optimize_content
 
 # Initialize logger

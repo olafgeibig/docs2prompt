@@ -69,6 +69,7 @@ Taken from the [Long context propting tips](https://docs.anthropic.com/en/docs/b
     </document_content>
   </document>
 </documents>
+```
 
 ## Types
 ```python

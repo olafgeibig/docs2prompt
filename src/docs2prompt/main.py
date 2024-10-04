@@ -2,7 +2,7 @@ import argparse
 import json
 from pathlib import Path
 from pydantic import ValidationError
-from .types import PromptProject
+from .custom_types import PromptProject
 from .document_processor import convert_to_markdown
 
 def create_project(project_name):
