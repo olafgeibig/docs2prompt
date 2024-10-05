@@ -19,7 +19,6 @@ prompt-toolkit = "^3.0.48"
 python-dotenv = "^1.0.1"
 arize-phoenix-otel = "^0.5.1"
 openinference-instrumentation-openai = "^0.1.14"
-opentelemetry-semantic-conventions = "^0.48b0"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^7.3.1"

@@ -1,35 +1,32 @@
 from prompt_toolkit import prompt
 from litellm import completion
 from dotenv import load_dotenv
-from phoenix.otel import register
-from openinference.instrumentation.openai import OpenAIInstrumentor
+from docs2prompt.arize_phoenix import openai_instrumentation
 
 # Load environment variables from .env file
 load_dotenv()
-tracer_provider = register(
-    project_name="docs2prompt",
-    endpoint="http://localhost:6006/v1/traces"
-)
-OpenAIInstrumentor().instrument(tracer_provider=tracer_provider)
+openai_instrumentation()
 
 def ai_response(prompt, system_message):
     try:
         response = completion(
-            model="gemini/gemini-1.5-flash",
+            # model="gemini/gemini-1.5-flash",
+            # model="gpt-3.5-turbo",
+            model = "openrouter/deepseek/deepseek-chat",
             messages=[
                 {"role": "system", "content": system_message},
                 {"role": "user", "content": prompt}
             ],
-            max_tokens=150
+            max_tokens=300
         )
         return response.choices[0].message.content.strip()
-    except Exception as e:
+    except Exception as e: 
         print(f"Error in AI response: {e}")
         return f"Failed to get AI response. Using original input: '{prompt}'"
 
 def interactive_chat(chat_type):
     system_messages = {
-        "role": "You are an AI assistant helping to refine role descriptions for an AI prompt generator. Expand on the user's input to create a more detailed and specific role description.",
+        "role": "You are an AI assistant helping to refine AI role descriptions for an AI prompt generator. Expand on the user's input to create a more detailed and specific role description. Don't use markdown.",
         "purpose": "You are an AI assistant helping to refine project purposes for an AI prompt generator. Expand on the user's input to create a more detailed and specific project purpose.",
         "instructions": "You are an AI assistant helping to refine instructions for an AI prompt generator. Expand on the user's input to create more detailed and specific instructions."
     }
@@ -41,7 +38,7 @@ def interactive_chat(chat_type):
 
     while True:
         response = ai_response(ai_prompt, system_messages[chat_type])
-        print(f"\nAI Response: {response}")
+        print(f"\n{response}")
 
         user_feedback = prompt("\nHow to proceed? approve(a), reject(r) or comment(c): ")
 
