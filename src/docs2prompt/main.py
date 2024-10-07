@@ -30,3 +30,24 @@ cli.add_command(create)
 if __name__ == '__main__':
     click.echo('Starting CLI application')
     cli()
+import click
+from docs2prompt.document_manager import DocumentManager
+
+@click.group()
+def cli():
+    """Docs2Prompt CLI"""
+    pass
+
+@cli.command()
+@click.argument('directory', type=click.Path(exists=True))
+@click.option('--whitelist', '-w', multiple=True, help='Whitelist glob patterns')
+@click.option('--blacklist', '-b', multiple=True, help='Blacklist glob patterns')
+def create_file_list(directory, whitelist, blacklist):
+    """Create a list of files from the given directory"""
+    doc_manager = DocumentManager()
+    file_list = doc_manager.create_file_list(directory, whitelist, blacklist)
+    for file in file_list:
+        click.echo(file)
+
+if __name__ == '__main__':
+    cli()

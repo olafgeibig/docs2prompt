@@ -6,10 +6,10 @@ env-file: .env.aider
 cache-prompts: true
 cache-keepalive-pings: 5
 light-mode: true
-auto-commits: false
+auto-commits: true
 test-cmd: pytest
 auto-test: true
-no-stream: true
+stream: false
 
 architect: true
 # editor-model: deepseek/deepseek-chat
