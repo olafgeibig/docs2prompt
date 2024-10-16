@@ -1089,6 +1089,52 @@ opentelemetry-api = "*"
 opentelemetry-sdk = "*"
 
 [[package]]
+name = "openinference-instrumentation-crewai"
+version = "0.1.2"
+description = "OpenInference Crewai Instrumentation"
+optional = false
+python-versions = "<3.13,>=3.10"
+files = [
+    {file = "openinference_instrumentation_crewai-0.1.2-py3-none-any.whl", hash = "sha256:b39efdc4e433d6bf0bc0d640695a268e3fc35e9d7834077d9aa55cec1973fcb2"},
+    {file = "openinference_instrumentation_crewai-0.1.2.tar.gz", hash = "sha256:f4b279f19fccea95327ea0230eb648dcf01aa346a8f580f4940526eeae9b012d"},
+]
+
+[package.dependencies]
+openinference-instrumentation = ">=0.1.12"
+openinference-semantic-conventions = "*"
+opentelemetry-api = "*"
+opentelemetry-instrumentation = "*"
+opentelemetry-semantic-conventions = "*"
+typing-extensions = "*"
+wrapt = "*"
+
+[package.extras]
+instruments = ["crewai (>=0.41.1)"]
+test = ["crewai (==0.41.1)", "crewai-tools (==0.4.26)", "opentelemetry-sdk", "responses", "vcrpy"]
+
+[[package]]
+name = "openinference-instrumentation-litellm"
+version = "0.1.4"
+description = "OpenInference liteLLM Instrumentation"
+optional = false
+python-versions = "<3.13,>=3.8"
+files = [
+    {file = "openinference_instrumentation_litellm-0.1.4-py3-none-any.whl", hash = "sha256:f154b8ee1468cfbecaf658ae2b44beeadd778970f8b0e39a46722e89e7ce8af5"},
+    {file = "openinference_instrumentation_litellm-0.1.4.tar.gz", hash = "sha256:9d5d8e26d82fe5827fcb022f3a94c345f9ff0454cb9685ebf38ca9e330abf8fa"},
+]
+
+[package.dependencies]
+openinference-instrumentation = ">=0.1.12"
+openinference-semantic-conventions = ">=0.1.9"
+opentelemetry-api = "*"
+opentelemetry-instrumentation = "*"
+opentelemetry-sdk = "*"
+wrapt = "*"
+
+[package.extras]
+test = ["litellm", "opentelemetry-instrumentation-httpx", "opentelemetry-sdk", "tenacity"]
+
+[[package]]
 name = "openinference-instrumentation-openai"
 version = "0.1.14"
 description = "OpenInference OpenAI Instrumentation"
@@ -1895,6 +1941,21 @@ files = [
 ]
 
 [[package]]
+name = "tenacity"
+version = "9.0.0"
+description = "Retry code until it succeeds"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "tenacity-9.0.0-py3-none-any.whl", hash = "sha256:93de0c98785b27fcf659856aa9f54bfbd399e29969b0621bc7f762bd441b4539"},
+    {file = "tenacity-9.0.0.tar.gz", hash = "sha256:807f37ca97d62aa361264d497b0e31e92b8027044942bfa756160d908320d73b"},
+]
+
+[package.extras]
+doc = ["reno", "sphinx"]
+test = ["pytest", "tornado (>=4.5)", "typeguard"]
+
+[[package]]
 name = "tiktoken"
 version = "0.7.0"
 description = "tiktoken is a fast BPE tokeniser for use with OpenAI's models"
@@ -2328,4 +2389,4 @@ type = ["pytest-mypy"]
 [metadata]
 lock-version = "2.0"
 python-versions = ">=3.12,<3.13"
-content-hash = "21cb529ba3d47da1a8847f38d1e78a182f4e89089f2cd56e0941c3f1896d6068"
+content-hash = "0fe21ec73c1db1f1d5ba821c9c9d8f9219574d65662e7d1ea5f535ee54b64c2c"

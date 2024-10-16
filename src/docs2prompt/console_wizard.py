@@ -1,13 +1,14 @@
 from prompt_toolkit import prompt
-from litellm import completion
+import litellm
 from dotenv import load_dotenv
-from docs2prompt.arize_phoenix import openai_instrumentation
 
 def ai_response(prompt, system_message):
     try:
-        response = completion(
+        response = litellm.completion(
             # model="openrouter/deepseek/deepseek-chat",
             # model = "openrouter/qwen/qwen-2.5-72b-instruct",
+            # model="openrouter/google/gemini-flash-1.5",
+            model="gemini/gemini-1.5-flash",
             messages=[
                 {"role": "system", "content": system_message},
                 {"role": "user", "content": prompt}
@@ -67,7 +68,7 @@ def wizard(chat_type, initial_content=None):
 if __name__ == "__main__":
     # Load environment variables from .env file
     load_dotenv()
-    openai_instrumentation()
+    litellm_instrumentation()
 
     print("Role Chat:")
     role_result = wizard("role")

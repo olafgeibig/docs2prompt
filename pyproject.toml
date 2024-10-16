@@ -19,6 +19,9 @@ prompt-toolkit = "^3.0.48"
 python-dotenv = "^1.0.1"
 arize-phoenix-otel = "^0.5.1"
 openinference-instrumentation-openai = "^0.1.14"
+openinference-instrumentation-litellm = "^0.1.4"
+tenacity = "^9.0.0"
+openinference-instrumentation-crewai = "^0.1.2"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^7.3.1"
